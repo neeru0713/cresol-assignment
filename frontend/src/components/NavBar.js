@@ -1,13 +1,13 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import { CgSearch } from "react-icons/cg";
 import Register from "./Register";
 import { Link } from "react-router-dom";
-
+import { UserContext } from "../App";
 const NavBar = () => {
   const [searchText, setSearchText] = useState("");
   const [showRegisterModal, setShowRegisterModal] = useState(false);
   const [isPopoverVisible, setPopoverVisible] = useState(false);
-  const user = ''
+  const { user } = useContext(UserContext);
   const popoverRef = useRef(null);
 
   useEffect(() => {
@@ -78,20 +78,26 @@ const NavBar = () => {
               src="https://assets-in.bmscdn.com/static/2023/10/default-pic.png"
               alt="User"
             />
-            <span>Hi,{user || "Guest"}</span>
+            <span>Hi, {user?.name || "Guest"}</span>
             {isPopoverVisible && (
               <div className="popover rounded-lg absolute bg-white right-0 shadow-md top-10">
                 <ul className="p-4 border border-gray-300 rounded-lg border-lg w-[150px] text-center flex flex-col">
-                  <li
-                    onClick={openModal}
-                    className="rounded-lg p-1 hover:bg-blue-100"
-                  >
-                    Sign Up
-                  </li>
+                  {!user && (
+                    <li
+                      onClick={openModal}
+                      className="rounded-lg p-1 hover:bg-blue-100"
+                    >
+                      Sign Up
+                    </li>
+                  )}
                   <li className="rounded-lg p-1 hover:bg-blue-100">
                     My Bookings
                   </li>
-                  <li className="rounded-lg p-1 hover:bg-blue-100">Sign Out</li>
+                  {user && (
+                    <li className="rounded-lg p-1 hover:bg-blue-100">
+                      Sign Out
+                    </li>
+                  )}
                 </ul>
               </div>
             )}
