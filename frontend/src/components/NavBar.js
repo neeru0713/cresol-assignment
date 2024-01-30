@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { CgSearch } from "react-icons/cg";
 import Register from "./Register";
+import { Link } from "react-router-dom";
 
 const NavBar = () => {
   const [searchText, setSearchText] = useState("");
@@ -42,11 +43,14 @@ const NavBar = () => {
   return (
     <>
       <div className="navbar flex justify-between px-2 py-3 items-center bg-[#F8F8F8]">
-        <img
-          className="h-[40px] ml-10"
-          src="https://www.cresolinfoserv.com/static/e1bd846383d17f597aa26998e4e51991/b06b5/logo.avif"
-          alt="Logo"
-        />
+        <Link to="/">
+          {" "}
+          <img
+            className="h-[40px] ml-10"
+            src="https://www.cresolinfoserv.com/static/e1bd846383d17f597aa26998e4e51991/b06b5/logo.avif"
+            alt="Logo"
+          />
+        </Link>
         <div className="search-container relative">
           <input
             type="text"
@@ -59,9 +63,11 @@ const NavBar = () => {
         </div>
 
         <div className="flex justify-between gap-6 items-center">
-          <button className="font-medium border border-gray-400 px-3 py-1 rounded-lg text-white bg-blue-800 hover:bg-blue-600">
-            Create Event
-          </button>
+          <Link to="/createevent">
+            <button className="font-medium border border-gray-400 px-3 py-1 rounded-lg text-white bg-blue-800 hover:bg-blue-600">
+              Create Event
+            </button>
+          </Link>
           <div
             className="user-info cursor-pointer relative flex items-center mr-14 gap-2"
             onClick={handlePopoverToggle}
@@ -72,7 +78,7 @@ const NavBar = () => {
               src="https://assets-in.bmscdn.com/static/2023/10/default-pic.png"
               alt="User"
             />
-            <span>Hi,{ user || "Guest"}</span>
+            <span>Hi,{user || "Guest"}</span>
             {isPopoverVisible && (
               <div className="popover rounded-lg absolute bg-white right-0 shadow-md top-10">
                 <ul className="p-4 border border-gray-300 rounded-lg border-lg w-[150px] text-center flex flex-col">
