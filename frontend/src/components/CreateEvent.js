@@ -1,15 +1,15 @@
 import React, { useState, useContext } from "react";
-import { Link } from "react-router-dom"
+import { Link } from "react-router-dom";
 import { API_URL } from "../config/config";
 import { UserContext } from "../App";
 const CreateEvent = () => {
-     const { user } = useContext(UserContext);
+  const { user } = useContext(UserContext);
   const [formData, setFormData] = useState({
     organization: "",
-    organizerName: "", 
+    organizerName: "",
     title: "",
     location: "",
-    city: "", 
+    city: "",
     date: "",
     image: "",
     description: "",
@@ -26,30 +26,27 @@ const CreateEvent = () => {
     }));
   };
 
-    const handleSave = async () => {
-      
-        try {
-            const url = `${API_URL}/api/events`;
+  const handleSave = async () => {
+    try {
+      const url = `${API_URL}/api/events`;
 
-        const response = await fetch(url, {
-          method: "POST",
-          headers: {
-              "Content-Type": "application/json",
-              "Authorization": user?.token
-          },
-          body: JSON.stringify(formData),
-        });
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: user?.token,
+        },
+        body: JSON.stringify(formData),
+      });
 
-        if (response.status !== 201) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-
-        await response.json();
-
-      } catch (error) {
-        console.error("Error during API call:", error.message);
+      if (response.status !== 201) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
       }
-   
+
+      await response.json();
+    } catch (error) {
+      console.error("Error during API call:", error.message);
+    }
   };
 
   return (
@@ -130,8 +127,8 @@ const CreateEvent = () => {
             <label>Date and Time </label>
             <input
               type="datetime-local"
-              name="dateTime"
-              value={formData.dateTime}
+              name="date"
+              value={formData.date}
               onChange={handleInputChange}
             />
           </div>
