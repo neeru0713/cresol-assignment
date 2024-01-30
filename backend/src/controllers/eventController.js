@@ -18,7 +18,15 @@ class EventController {
       res.status(500).send('Internal Server Error');
     }
   }
-
+  async getAllEvents(req, res) {
+    try {
+      const events = await eventService.getAllEvents(req.filters);
+      res.status(200).json(events);
+    } catch (error) {
+      console.error('Error fetching events:', error);
+      res.status(500).send('Internal Server Error');
+    }
+  }
 
 }
 
