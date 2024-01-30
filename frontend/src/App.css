@@ -11,7 +11,23 @@
   background: rgba(0, 0, 0, 0.5); 
   z-index: 999; 
 }
+.create-event label {
+  font-size: 18px; 
+  
+}
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+ 
+ 
+}
 
+.grid-item {
+  border: 1px solid #ddd; 
+  padding: 16px; 
+  text-align: center;
+}
 
 input{
     @apply border border-2 border-gray-400 rounded-lg py-1 px-2;
