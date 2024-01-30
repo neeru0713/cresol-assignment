@@ -18,6 +18,10 @@ const userSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  city: {
+    type: String,
+    required: true,
+  },
   role: {
     type: String,
     enum: ['organizer', 'attendee'],
