@@ -2,7 +2,17 @@ const app = require('./app');
 const mongoose = require('mongoose');
 const PORT = process.env.PORT || 8080;
 
-mongoose.connect('mongodb://localhost:27017/cresol', {
+
+let mongoURI;
+if (process.env.NODE_ENV === "production") {
+  mongoURI =
+  "mongodb+srv://neerurani1307:%40Neeru1307@neerucluster.z4krrc9.mongodb.net/cresol?retryWrites=true&w=majority";
+} else {
+  mongoURI = "mongodb://localhost:27017/cresol";
+}
+
+
+mongoose.connect(mongoURI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
