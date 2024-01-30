@@ -70,6 +70,18 @@ class EventController {
     }
   }
 
+  async searchEvents(req, res) {
+    try {
+      const searchQuery = req.query.q;
+      const events = await eventService.searchEvents(searchQuery);
+
+      res.status(200).json(events);
+    } catch (error) {
+      console.error('Error searching events:', error);
+      res.status(500).send('Internal Server Error');
+    }
+  }
+
 
 }
 

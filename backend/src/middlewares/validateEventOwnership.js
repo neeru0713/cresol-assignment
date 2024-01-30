@@ -5,7 +5,6 @@ const validateEventOwnership = async (req, res, next) => {
     const eventId = req.params.eventId;
     const userId = req.user._id;
 
-    // Check if the user owns the event
     const event = await Event.findById(eventId);
 
     if (!event || event.owner.toString() !== userId.toString()) {

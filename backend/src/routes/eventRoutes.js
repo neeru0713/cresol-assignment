@@ -11,5 +11,6 @@ router.get('/', filterEvents, eventController.getAllEvents);
 router.put('/:eventId', authenticateUser, validateEventOwnership, eventController.editEvent);
 router.delete('/:eventId', authenticateUser, validateEventOwnership, eventController.deleteEvent);
 router.post('/:eventId/join', authenticateUser, eventController.joinEvent);
+router.get('/search', eventController.searchEvents);
 
 module.exports = router;
