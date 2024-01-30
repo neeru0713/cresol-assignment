@@ -83,7 +83,7 @@ const Modal = ({
           <div className="form-buttons mt-5 flex w-full justify-between">
             <button
               type="button"
-              className="font-medium border border-gray-400 px-2 py-1 rounded-lg text-red-500"
+              className="font-medium border border-gray-400 px-2 py-1 rounded-lg text-red-600"
               onClick={closeModal}
             >
               Cancel

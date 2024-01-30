@@ -1,16 +1,21 @@
-import React, { useState } from "react";
-
-const CreateEvent = ({ onCancel, onSave }) => {
+import React, { useState, useContext } from "react";
+import { Link } from "react-router-dom"
+import { API_URL } from "../config/config";
+import { UserContext } from "../App";
+const CreateEvent = () => {
+     const { user } = useContext(UserContext);
   const [formData, setFormData] = useState({
     organization: "",
+    organizerName: "", 
     title: "",
     location: "",
-    dateTime: "",
+    city: "", 
+    date: "",
     image: "",
     description: "",
     genre: "",
     price: "",
-    maxAttendees: "",
+    maximumAllowed: "",
   });
 
   const handleInputChange = (e) => {
@@ -21,104 +26,171 @@ const CreateEvent = ({ onCancel, onSave }) => {
     }));
   };
 
-  const handleSave = () => {
-    onSave(formData);
+    const handleSave = async () => {
+      
+        try {
+            const url = `${API_URL}/api/events`;
+
+        const response = await fetch(url, {
+          method: "POST",
+          headers: {
+              "Content-Type": "application/json",
+              "Authorization": user?.token
+          },
+          body: JSON.stringify(formData),
+        });
+
+        if (response.status !== 201) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        await response.json();
+
+      } catch (error) {
+        console.error("Error during API call:", error.message);
+      }
+   
   };
 
   return (
-    <div className="create-event flex flex-col gap-4 border border-2 w-[500px] rounded-xl p-12 text-center m-auto">
-      <label>
-        Organization:
-        <input
-          type="text"
-          name="organization"
-          value={formData.organization}
-          onChange={handleInputChange}
-        />
-      </label>
+    <div className="create-event flex flex-col gap-10 p-12 w-[80%]">
+      <div className="flex flex-col gap-5">
+        <h1>Organizer Details</h1>
+        <div className="flex justify-between">
+          <div className="form-group">
+            <label>Organization Name </label>
+            <input
+              type="text"
+              name="organization"
+              value={formData.organization}
+              onChange={handleInputChange}
+            />
+          </div>
 
-      <label>
-        Title:
-        <input
-          type="text"
-          name="title"
-          value={formData.title}
-          onChange={handleInputChange}
-        />
-      </label>
+          <div className="form-group">
+            <label>Organizer Name</label>
+            <input
+              type="text"
+              name="organizerName"
+              value={formData.organizerName}
+              onChange={handleInputChange}
+            />
+          </div>
+        </div>
+      </div>
 
-      <label>
-        Location:
-        <input
-          type="text"
-          name="location"
-          value={formData.location}
-          onChange={handleInputChange}
-        />
-      </label>
+      <div className="flex flex-col gap-5">
+        <h1>Event Details</h1>
 
-      <label>
-        Date and Time:
-        <input
-          type="datetime-local"
-          name="dateTime"
-          value={formData.dateTime}
-          onChange={handleInputChange}
-        />
-      </label>
+        <div className="flex justify-between">
+          <div className="form-group">
+            <label>Event Title </label>
+            <input
+              type="text"
+              name="title"
+              value={formData.title}
+              onChange={handleInputChange}
+            />
+          </div>
 
-      <label>
-        Image of Event:
-        <input
-          type="text"
-          name="image"
-          value={formData.image}
-          onChange={handleInputChange}
-        />
-      </label>
+          <div className="form-group">
+            <label>Genre </label>
+            <input
+              type="text"
+              name="genre"
+              value={formData.genre}
+              onChange={handleInputChange}
+            />
+          </div>
 
-      <label>
-        Description:
-        <textarea
-          name="description"
-          value={formData.description}
-          onChange={handleInputChange}
-        />
-      </label>
+          <div className="form-group">
+            <label>City </label>
+            <input
+              type="text"
+              name="city"
+              value={formData.city}
+              onChange={handleInputChange}
+            />
+          </div>
+        </div>
 
-      <label>
-        Genre:
-        <input
-          type="text"
-          name="genre"
-          value={formData.genre}
-          onChange={handleInputChange}
-        />
-      </label>
+        <div className="form-group">
+          <label>Location </label>
+          <input
+            type="text"
+            name="location"
+            className="w-full"
+            value={formData.location}
+            onChange={handleInputChange}
+          />
+        </div>
 
-      <label>
-        Price:
-        <input
-          type="text"
-          name="price"
-          value={formData.price}
-          onChange={handleInputChange}
-        />
-      </label>
+        <div className="flex justify-between">
+          <div className="form-group">
+            <label>Date and Time </label>
+            <input
+              type="datetime-local"
+              name="dateTime"
+              value={formData.dateTime}
+              onChange={handleInputChange}
+            />
+          </div>
 
-      <label>
-        Maximum Attendees:
-        <input
-          type="number"
-          name="maxAttendees"
-          value={formData.maxAttendees}
-          onChange={handleInputChange}
-        />
-      </label>
+          <div className="form-group">
+            <label>Price</label>
+            <input
+              type="text"
+              name="price"
+              value={formData.price}
+              onChange={handleInputChange}
+            />
+          </div>
 
-      <div>
-        <button onClick={onCancel}>Cancel</button>
-        <button onClick={handleSave}>Save</button>
+          <div className="form-group">
+            <label>Maximum Attendees</label>
+            <input
+              type="number"
+              name="maximumAllowed"
+              value={formData.maximumAllowed}
+              onChange={handleInputChange}
+            />
+          </div>
+        </div>
+
+        <div className="form-group">
+          <label>Event image link </label>
+          <input
+            type="text"
+            name="image"
+            className="w-full"
+            value={formData.image}
+            onChange={handleInputChange}
+          />
+        </div>
+
+        <div className="form-group description">
+          <label>Description </label>
+          <textarea
+            name="description"
+            value={formData.description}
+            className="border border-2 p-2 border-gray-400 rounded-lg h-[100px] w-full"
+            onChange={handleInputChange}
+          />
+        </div>
+
+        <div className="form-group-buttons">
+          <Link to="/">
+            <button className="font-medium border border-gray-400 px-2 py-1 rounded-lg text-red-600 text-lg">
+              Cancel
+            </button>
+          </Link>
+          <button
+            onClick={handleSave}
+            className="font-medium border border-gray-400 px-2 py-1 rounded-lg bg-blue-800 text-white hover:bg-blue-700 text-lg"
+          >
+            Save
+          </button>
+        </div>
       </div>
     </div>
   );

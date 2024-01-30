@@ -13,6 +13,10 @@ const eventSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  organizerName: {
+    type: String,
+    required: true,
+  },
   location: {
     type: String,
     required: true,
@@ -45,7 +49,7 @@ const eventSchema = new mongoose.Schema({
   attendees: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
+      ref: "User",
     },
   ],
   feedbacks: [
