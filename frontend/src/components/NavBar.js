@@ -56,7 +56,7 @@ const NavBar = () => {
             type="text"
             value={searchText}
             onChange={handleSearchChange}
-            className="search h-[40px] w-[600px] border border-2 rounded-md pl-2"
+            className="search h-[40px] w-[600px] border border-2 border-gray-300 rounded-md pl-2"
             placeholder="Search"
           />
           <CgSearch className="search-icon absolute right-2 top-3 text-gray-500" />

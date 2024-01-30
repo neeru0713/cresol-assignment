@@ -17,7 +17,7 @@
 }
 .grid-container {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 16px;
  
  
@@ -54,3 +54,12 @@ input{
 .form-group-buttons{
     @apply ml-[115%] flex gap-5;
 }
+
+.detail-group{
+    @apply flex flex-row justify-between mx-4;
+}
+
+.detail-group h2{
+    @apply font-semibold ;
+}
+

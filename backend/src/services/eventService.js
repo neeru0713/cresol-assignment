@@ -64,6 +64,10 @@ class EventService {
 
       const updatedEvent = await event.save();
 
+      await User.findByIdAndUpdate(userId, {
+        $push: { joinedEvents: eventId },
+      });
+
       return updatedEvent;
     } catch (error) {
       throw error;

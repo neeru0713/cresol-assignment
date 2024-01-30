@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import CreateEvent from "./components/CreateEvent";
 import './App.css';
 import { Home } from "./components/Home";
+import { EventDetails } from "./components/EventDetails";
 import React, { useState, useEffect, createContext } from "react";
 
 export const UserContext = createContext();
@@ -27,6 +28,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/createevent" element={<CreateEvent />} />
+            <Route path="/:title/details" element={<EventDetails/>} />
           </Routes>
         </div>
       </UserContext.Provider>
