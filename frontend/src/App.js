@@ -1,10 +1,10 @@
-
+import NavBar from "./components/NavBar"
 import './App.css';
 
 function App() {
   return (
     <div className='text-black'>
-      Cresol InfoServ
+    <NavBar/>
     </div>
   );
 }
