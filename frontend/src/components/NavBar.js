@@ -6,6 +6,7 @@ const NavBar = () => {
   const [searchText, setSearchText] = useState("");
   const [showRegisterModal, setShowRegisterModal] = useState(false);
   const [isPopoverVisible, setPopoverVisible] = useState(false);
+  const user = ''
   const popoverRef = useRef(null);
 
   useEffect(() => {
@@ -40,7 +41,7 @@ const NavBar = () => {
 
   return (
     <>
-      <div className="navbar flex justify-between p-2 items-center bg-[#F8F8F8]">
+      <div className="navbar flex justify-between px-2 py-3 items-center bg-[#F8F8F8]">
         <img
           className="h-[40px] ml-10"
           src="https://www.cresolinfoserv.com/static/e1bd846383d17f597aa26998e4e51991/b06b5/logo.avif"
@@ -62,26 +63,27 @@ const NavBar = () => {
             Create Event
           </button>
           <div
-            className="user-info cursor-pointer relative"
+            className="user-info cursor-pointer relative flex items-center mr-14 gap-2"
             onClick={handlePopoverToggle}
             ref={popoverRef}
           >
             <img
-              className="h-[35px] mr-14 rounded-full"
+              className="h-[35px] rounded-full"
               src="https://assets-in.bmscdn.com/static/2023/10/default-pic.png"
               alt="User"
             />
+            <span>Hi,{ user || "Guest"}</span>
             {isPopoverVisible && (
-              <div className="popover rounded-lg absolute bg-white right-[5%] shadow-md mt-2">
-                <ul className="p-4 border rounded-lg border-lg w-[150px] text-center flex flex-col">
+              <div className="popover rounded-lg absolute bg-white right-0 shadow-md top-10">
+                <ul className="p-4 border border-gray-300 rounded-lg border-lg w-[150px] text-center flex flex-col">
                   <li
                     onClick={openModal}
                     className="rounded-lg p-1 hover:bg-blue-100"
                   >
-                    Sign in
+                    Sign Up
                   </li>
                   <li className="rounded-lg p-1 hover:bg-blue-100">
-                    Your Booking
+                    My Bookings
                   </li>
                   <li className="rounded-lg p-1 hover:bg-blue-100">Sign Out</li>
                 </ul>
