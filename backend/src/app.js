@@ -2,13 +2,13 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const app = express();
+const userRoutes = require('./routes/userRoutes');
 
 
 app.use(cors());
 app.use(bodyParser.json());
 
 
-// const routes = require('./routes');
-// app.use('/api', routes);
+app.use('/api/users', userRoutes);
 
 module.exports = app;
