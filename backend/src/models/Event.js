@@ -42,10 +42,12 @@ const eventSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
-  attendances: {
-    type: Number,
-    default: 0,
-  },
+  attendees: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+    },
+  ],
   feedbacks: [
     {
       user: {
