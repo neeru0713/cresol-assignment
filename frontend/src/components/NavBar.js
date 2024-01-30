@@ -90,6 +90,12 @@ const NavBar = () => {
                       Sign Up
                     </li>
                   )}
+                  {user && user.role === "organizer" && (
+                    <li className="rounded-lg p-1 hover:bg-blue-100">
+                      Manage Events
+                    </li>
+                  )}
+
                   <li className="rounded-lg p-1 hover:bg-blue-100">
                     My Bookings
                   </li>
