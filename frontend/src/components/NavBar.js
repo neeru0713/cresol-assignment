@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
 import { CgSearch } from "react-icons/cg";
 import Register from "./Register";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../App";
 const NavBar = () => {
   const [searchText, setSearchText] = useState("");
@@ -9,7 +9,7 @@ const NavBar = () => {
   const [isPopoverVisible, setPopoverVisible] = useState(false);
   const { user, setUser } = useContext(UserContext);
   const popoverRef = useRef(null);
-
+  const navigate = useNavigate()
   const logout = () => {
     localStorage.removeItem('cresol_user')
     setUser(null)
@@ -43,6 +43,7 @@ const NavBar = () => {
 
   const handleSearchChange = (e) => {
     setSearchText(e.target.value);
+    navigate(`/`, {state: e.target.value})
   };
 
   return (

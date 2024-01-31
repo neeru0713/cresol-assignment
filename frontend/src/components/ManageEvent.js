@@ -61,12 +61,12 @@ const ManageEvent = () => {
 
   const getDate = (timestamp) => {
     const dateTime = new Date(timestamp);
-    return dateTime.toISOString().split("T")[0]; // YYYY-MM-DD
+    return dateTime.toISOString().split("T")[0];
   };
 
   const getTime = (timestamp) => {
     const dateTime = new Date(timestamp);
-    return dateTime.toISOString().split("T")[1].split(".")[0]; // HH:MM:SS
+    return dateTime.toISOString().split("T")[1].split(".")[0]; 
   };
 
   useEffect(() => {

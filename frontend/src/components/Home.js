@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { API_URL } from "../config/config";
 import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router";
 export const Home = () => {
   const [events, setEvents] = useState([]);
   const [filters, setFilters] = useState({
@@ -8,23 +9,36 @@ export const Home = () => {
     genre: "",
     maxPrice: "",
   });
+  const {state} = useLocation()
+  
   const navigate = useNavigate();
+  const timeoutIdRef = useRef(null);
+
+  function debounce(func, delay) {
+  
+    return function (...args) {
+      clearTimeout(timeoutIdRef.current);
+  
+      timeoutIdRef.current = setTimeout(() => {
+        func.apply(this, args);
+      }, delay);
+    };
+  }
+  
+
+  useEffect(()=>{
+    if(state!==null){
+      debouncedFetchData(state)
+    } else {
+      fetchEvents();
+    }
+   
+  }, [state])
 
   const fetchEvents = async () => {
     try {
       let url = `${API_URL}/api/events?`;
 
-      if (filters.city) {
-        url = url + `city=${filters.city}`;
-      }
-      if (filters.genre) {
-        url = url + `genre=${filters.genre}`;
-      }
-      if (filters.maxPrice) {
-        url = url + `maxPrice=${filters.maxPrice}`;
-      }
-
-      // Append filters to the URL based on the user's input
       const filteredUrl = new URL(url);
       Object.entries(filters).forEach(([key, value]) => {
         if (value) {
@@ -50,8 +64,39 @@ export const Home = () => {
     }
   };
 
+  const fetchEventsBasedOnSearch = async (searchQuery) => {
+    try {
+      let url = `${API_URL}/api/events/search?q=${searchQuery}`;
+
+      const response = await fetch(url, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (response.status !== 200) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const jsonResponse = await response.json();
+      setEvents(jsonResponse);
+    } catch (error) {
+      console.error("Error during API call:", error.message);
+    }
+  };
+
+  const debouncedFetchData = debounce(fetchEventsBasedOnSearch, 500);
+
   useEffect(() => {
-    fetchEvents();
+    if(!state){
+      fetchEvents();
+    }
+
+    return () => {
+      clearTimeout(timeoutIdRef.current);
+    };
+    
   }, []);
 
   const handleFilterChange = (filterType, value) => {
