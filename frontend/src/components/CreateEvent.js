@@ -1,8 +1,10 @@
-import React, { useState, useContext } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useContext, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router";
 import { API_URL } from "../config/config";
 import { UserContext } from "../App";
-const CreateEvent = ({editMode}) => {
+const CreateEvent = ({ editMode }) => {
+  const { state } = useLocation();
   const { user, setUser } = useContext(UserContext);
   const [formData, setFormData] = useState({
     organization: "",
@@ -18,6 +20,14 @@ const CreateEvent = ({editMode}) => {
     maximumAllowed: "",
   });
 
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (editMode === true) {
+      setFormData(state);
+    }
+  }, []);
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
@@ -28,25 +38,44 @@ const CreateEvent = ({editMode}) => {
 
   const handleSave = async () => {
     try {
-      const url = `${API_URL}/api/events`;
+      if (editMode === true) {
+        const url = `${API_URL}/api/events/${state._id}`;
+        const response = await fetch(url, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: user?.token,
+          },
+          body: JSON.stringify(formData),
+        });
+        if (response.status !== 200) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
 
-      const response = await fetch(url, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: user?.token,
-        },
-        body: JSON.stringify(formData),
-      });
+        const jsonRes = await response.json();
+        navigate(`/${jsonRes?.title}/details`,  { state: jsonRes });
+      } else {
+        const url = `${API_URL}/api/events`;
 
-      if (response.status !== 201) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
+        const response = await fetch(url, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: user?.token,
+          },
+          body: JSON.stringify(formData),
+        });
 
-        await response.json();
+        if (response.status !== 201) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const jsonRes = await response.json();
         const updatedUser = { ...user, role: "organizer" };
         setUser(updatedUser);
         localStorage.setItem("cresol_user", JSON.stringify(updatedUser));
+        navigate(`/${jsonRes?.title}/details`,  { state: jsonRes });
+      }
     } catch (error) {
       console.error("Error during API call:", error.message);
     }

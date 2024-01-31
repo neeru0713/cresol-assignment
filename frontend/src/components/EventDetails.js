@@ -6,6 +6,16 @@ export const EventDetails = () => {
   const { state } = useLocation();
   const { user } = useContext(UserContext);
 
+  const getDate = (timestamp) => {
+    const dateTime = new Date(timestamp);
+    return dateTime.toISOString().split("T")[0]; 
+  };
+
+  const getTime = (timestamp) => {
+    const dateTime = new Date(timestamp);
+    return dateTime.toISOString().split("T")[1].split(".")[0]; 
+  };
+
   const joinEventClickHandler = async () => {
     try {
       const url = `${API_URL}/api/events/${state._id}/join`;
@@ -45,11 +55,11 @@ export const EventDetails = () => {
         <div className="w-[30%] bg-[#f8f8f8 flex flex-col gap-2">
           <div className="detail-group">
             <h2>Date</h2>
-            <span>{state.date}</span>
+            <span>{getDate(state.date)}</span>
           </div>
           <div className="detail-group">
             <h2>Time</h2>
-            <span>{state.date}</span>
+            <span>{getTime(state.date)}</span>
           </div>
           <div className="detail-group">
             <h2>Price</h2>
