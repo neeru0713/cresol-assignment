@@ -8,6 +8,8 @@
 6. All operations are passed through middlewares for security.
 7. App uses jwt authentication 
 
+# Snapshots of the application
+
 
 <img width="344" alt="Screenshot 2024-01-31 at 9 58 39 AM" src="https://github.com/neeru0713/cresol-assignment/assets/123808700/157451e1-714d-49fc-b2d9-20b965ef261c">
 <img width="540" alt="Screenshot 2024-01-31 at 9 58 58 AM" src="https://github.com/neeru0713/cresol-assignment/assets/123808700/d9608b3b-46e3-415a-b75b-8864d3e12b57">
