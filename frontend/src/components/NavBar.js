@@ -4,12 +4,13 @@ import Register from "./Register";
 import { SlBell } from "react-icons/sl";
 import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../App";
+import { API_URL } from "../config/config";
 
 const NavBar = () => {
   const [searchText, setSearchText] = useState("");
   const [showRegisterModal, setShowRegisterModal] = useState(false);
   const [isClickedBell, setIsClickedBell] = useState(false);
-  const [notification, setNotification] = useState([]);
+  const [notifications, setNotifications] = useState([]);
   const popoverRef1 = useRef(null);
   const [isPopoverVisible, setPopoverVisible] = useState(false);
   const { user, setUser } = useContext(UserContext);
@@ -43,20 +44,32 @@ const NavBar = () => {
     };
   }, []);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch("https://api.example.com/data");
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
+  const fetchData = async () => {
+    try {
+      
+      const url = `${API_URL}/api/users/${user?._id}/notifications`;
+      const response = await fetch(url, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: user?.token,
+        },
+       
+      });
 
-        const result = await response.json();
-        setNotification(result);
-      } catch (error) {
-        console.error("Error fetching data:", error.message);
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
       }
-    };
+
+      const result = await response.json();
+      setNotifications(result);
+    } catch (error) {
+      console.error("Error fetching data:", error.message);
+    }
+  };
+
+  useEffect(() => {
+    
 
     fetchData();
   }, []);
@@ -74,6 +87,7 @@ const NavBar = () => {
 
   const handleClickBell = () => {
     setIsClickedBell(!isClickedBell);
+    fetchData()
   };
   const handleSearchChange = (e) => {
     setSearchText(e.target.value);
@@ -104,6 +118,7 @@ const NavBar = () => {
 
         <div className="flex justify-between gap-6 items-center">
           <div className="relative">
+            {notifications.length > 0 && <span className="red-dot text-white">{notifications.length}</span>}
             <SlBell
               className="text-lg cursor-pointer"
               onClick={handleClickBell}
@@ -112,7 +127,7 @@ const NavBar = () => {
             {isClickedBell && (
               <div className="bell-popover rounded-lg absolute bg-white shadow-md top-[45px] left-[-30px]">
                 <ul className="p-4 border border-gray-300 rounded-lg border-lg w-[150px] text-center flex flex-col">
-                  {notification.map((notification, index) => (
+                  {notifications.map((notification, index) => (
                     <li
                       key={index}
                       className="rounded-lg p-1 hover:bg-blue-100"
@@ -161,11 +176,14 @@ const NavBar = () => {
                     </Link>
                   )}
 
-                  <Link to={`/${user?._id}/bookings`}>
-                    <li className="rounded-lg p-1 hover:bg-blue-100">
-                      My Bookings
-                    </li>
-                  </Link>
+                  {user && (
+                    <Link to={`/${user?._id}/bookings`}>
+                      <li className="rounded-lg p-1 hover:bg-blue-100">
+                        My Bookings
+                      </li>
+                    </Link>
+                  )}
+
                   {user && (
                     <li
                       onClick={logout}

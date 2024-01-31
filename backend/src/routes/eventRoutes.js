@@ -10,6 +10,7 @@ router.post('/', authenticateUser, validateEvent, eventController.createEvent);
 router.get('/', filterEvents, eventController.getAllEvents);
 router.get('/search', eventController.searchEvents);
 router.get('/:userId', authenticateUser, eventController.getEventsOfUser);
+router.get('/:eventId/rsvp', authenticateUser, eventController.rsvpToEvent);
 router.put('/:eventId', authenticateUser, validateEventOwnership, eventController.editEvent);
 router.delete('/:eventId', authenticateUser, validateEventOwnership, eventController.deleteEvent);
 router.get('/:eventId/join', authenticateUser, eventController.joinEvent);

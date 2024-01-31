@@ -28,6 +28,16 @@ const userSchema = new mongoose.Schema({
     default: "attendee",
   },
   joinedEvents: [{ type: mongoose.Schema.Types.ObjectId, ref: "Event" }],
+  notifications: [{
+    title: {
+      type: String,
+      default: "Notification Title",
+    },
+    read: {
+      type: Boolean,
+      default: false,
+    },
+  }],
 });
 
 const User = mongoose.model('User', userSchema);

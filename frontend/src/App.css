@@ -20,8 +20,19 @@
   grid-template-columns: repeat(3, 1fr);
   gap: 16px;
  
- 
 }
+
+.red-dot {
+  position: absolute;
+  top: -10px;
+  left: 10px;
+  text-align: center;
+  width: 20px;
+  height: 20px;
+  background-color: rgb(196, 2, 2);
+  border-radius: 50%;
+}
+
 
 .grid-item {
   

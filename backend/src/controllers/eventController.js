@@ -105,6 +105,26 @@ class EventController {
     }
   }
 
+  rsvpToEvent = async (req, res) => {
+    try {
+        const  userId  = req.user._id; 
+        const { eventId } = req.params;
+    
+        const result = await eventService.rsvpToEvent(eventId, userId);
+    
+        if (result.success) {
+          return res.status(200).json({ message: result.message });
+        } else {
+          return res.status(400).json({ message: result.message });
+        }
+      } catch (error) {
+        console.error('Error during RSVP:', error.message);
+        return res.status(500).json({ message: 'Internal server error' });
+      }
+    
+  };
+  
+
 
 }
 

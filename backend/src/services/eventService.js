@@ -130,6 +130,27 @@ class EventService {
       throw error;
     }
   }
+
+  async rsvpToEvent(eventId, userId) {
+    try {
+      const event = await Event.findById(eventId);
+
+      if (!event) {
+        throw new Error('Event not found');
+      }
+
+      if (!event.attendees.includes(userId)) {
+        event.attendees.push(userId);
+        await event.save();
+        return { success: true, message: 'RSVP successful' };
+      } else {
+        return { success: false, message: 'User already RSVP\'d to this event' };
+      }
+    } catch (error) {
+      throw error;
+    }
+  }
+
 }
 
 module.exports = new EventService();

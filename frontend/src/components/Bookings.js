@@ -35,12 +35,14 @@ const Bookings = () => {
     fetchUserEvents();
   }, [userId]);
 
-  const getDate = (dateString) => {
-    // Implement your logic to format the date
+  const getDate = (timestamp) => {
+    const dateTime = new Date(timestamp);
+    return dateTime.toISOString().split("T")[0]; 
   };
 
-  const getTime = (dateString) => {
-    // Implement your logic to format the time
+  const getTime = (timestamp) => {
+    const dateTime = new Date(timestamp);
+    return dateTime.toISOString().split("T")[1].split(".")[0]; 
   };
 
   return (
