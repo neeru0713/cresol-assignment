@@ -39,7 +39,7 @@ const CreateEvent = ({ editMode }) => {
   const handleSave = async () => {
     try {
       if (editMode === true) {
-        const url = `${API_URL}/api/events/${state._id}`;
+        const url = `${API_URL}/api/events/${state?._id}`;
         const response = await fetch(url, {
           method: "PUT",
           headers: {
@@ -82,7 +82,7 @@ const CreateEvent = ({ editMode }) => {
   };
 
   return (
-    <div className="create-event flex flex-col gap-10 p-12 w-[80%]">
+    <div className="create-event flex flex-col gap-20 p-12 w-[80%]">
       <div className="flex flex-col gap-5">
         <h1>Organizer Details</h1>
         <div className="flex justify-between">
@@ -108,7 +108,7 @@ const CreateEvent = ({ editMode }) => {
         </div>
       </div>
 
-      <div className="flex flex-col gap-5">
+      <div className="flex flex-col gap-10">
         <h1>Event Details</h1>
 
         <div className="flex justify-between">
@@ -215,7 +215,7 @@ const CreateEvent = ({ editMode }) => {
           </Link>
           <button
             onClick={handleSave}
-            className="font-medium border border-gray-400 px-2 py-1 rounded-lg bg-blue-800 text-white hover:bg-blue-700 text-lg"
+            className="font-medium px-2 py-1 rounded-lg bg-[#ee5537] hover:bg-[#ef5821] text-white text-lg"
           >
             Save
           </button>

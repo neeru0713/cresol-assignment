@@ -93,6 +93,18 @@ class EventController {
       }
   }
 
+  async getUserEvents(req, res) {
+    try {
+      const userId = req.params.userId;
+      const events = await eventService.getUserEvents(userId);
+
+      res.status(200).json(events);
+    } catch (error) {
+      console.error('Error getting user events:', error);
+      res.status(500).send('Internal Server Error');
+    }
+  }
+
 
 }
 

@@ -1,10 +1,12 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { useLocation } from "react-router";
+import { Link } from "react-router-dom";
 import { UserContext } from "../App";
 import { API_URL } from "../config/config";
 export const EventDetails = () => {
   const { state } = useLocation();
   const { user } = useContext(UserContext);
+  const [joinClicked, setJoinClicked] = useState(false)
 
   const getDate = (timestamp) => {
     const dateTime = new Date(timestamp);
@@ -18,7 +20,7 @@ export const EventDetails = () => {
 
   const joinEventClickHandler = async () => {
     try {
-      const url = `${API_URL}/api/events/${state._id}/join`;
+      const url = `${API_URL}/api/events/${state?._id}/join`;
 
       const response = await fetch(url, {
         method: "GET",
@@ -33,6 +35,7 @@ export const EventDetails = () => {
       }
 
       await response.json();
+      setJoinClicked(true)
     } catch (error) {
       console.error("Error during API call:", error.message);
     }
@@ -52,7 +55,7 @@ export const EventDetails = () => {
         </button>
       </div>
       <div className="flex gap-4">
-        <div className="w-[30%] bg-[#f8f8f8 flex flex-col gap-2">
+        <div className="w-[30%] bg-[#f8f8f8] p-2 flex flex-col gap-2">
           <div className="detail-group">
             <h2>Date</h2>
             <span>{getDate(state.date)}</span>
@@ -79,6 +82,7 @@ export const EventDetails = () => {
           <p className="px-10 py-5 text-lg">{state.description}</p>
         </div>
       </div>
+      {joinClicked && <div className="absolute right-8 top-26"> <Link to={`/${user._id}/bookings`} className="p-2 bg-blue-600 text-white rounded-lg hover:bg-blue-500">View all bookings</Link></div>}
     </div>
   );
 };

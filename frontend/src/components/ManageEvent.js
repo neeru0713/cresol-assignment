@@ -82,7 +82,7 @@ const ManageEvent = () => {
             <th>Organization</th>
             <th>Title</th>
             <th>Date</th>
-            <th>Created Time</th>
+            <th>Time</th>
             <th>Maximum Allowed</th>
             <th>Action</th>
           </tr>
@@ -101,14 +101,14 @@ const ManageEvent = () => {
                 
                     <button 
                     onClick={() => {navigateToEditPage(event)}}
-                    className="font-medium px-3 py-1 rounded-lg bg-[#ed5823] text-white hover:bg-[#ea6335] text-lg">
+                    className="font-medium px-3 py-1 rounded-lg bg-yellow-600 text-white hover:bg-yellow-500 text-lg">
                       Edit Event
                     </button>
                   
 
                   <button 
-                  onClick={() => {deleteEvent(event._id)}}
-                  className="font-medium px-3 py-1 rounded-lg bg-[#ed5823] text-white hover:bg-[#ea6335] text-lg">
+                  onClick={() => {deleteEvent(event?._id)}}
+                  className="font-medium px-3 py-1 rounded-lg bg-red-600 text-white hover:bg-red-500 text-lg">
                     Delete Event
                   </button>
                 </td>

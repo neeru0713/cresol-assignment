@@ -6,6 +6,7 @@ import { Home } from "./components/Home";
 import { EventDetails } from "./components/EventDetails";
 import React, { useState, useEffect, createContext } from "react";
 import ManageEvent from "./components/ManageEvent";
+import  Bookings  from "./components/Bookings";
 
 export const UserContext = createContext();
 
@@ -32,6 +33,7 @@ function App() {
             <Route path="/manageevent" element={<ManageEvent />} />
             <Route path="/createevent" element={<CreateEvent />} />
             <Route path="/:title/details" element={<EventDetails/>} />
+            <Route path="/:userId/bookings" element={<Bookings/>} />
           </Routes>
         </div>
       </UserContext.Provider>

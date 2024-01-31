@@ -20,12 +20,24 @@ class EventService {
 
   async getAllEvents(filters) {
     try {
-      const events = await Event.find(filters).populate("owner");
+     
+      const regexFilters = {};
+      Object.entries(filters).forEach(([key, value]) => {
+        if (typeof value === 'string') {
+          regexFilters[key] = new RegExp(value, 'i');
+        } else {
+          regexFilters[key] = value;
+        }
+      });
+  
+    
+      const events = await Event.find(regexFilters).populate("owner");
       return events;
     } catch (error) {
       throw error;
     }
   }
+  
 
   async editEvent(eventId, eventData) {
     try {
@@ -102,6 +114,21 @@ class EventService {
       } catch (error) {
         throw error;
       }
+  }
+
+  async getUserEvents(userId) {
+    try {
+     
+      const user = await User.findById(userId).populate('joinedEvents');
+
+      if (!user) {
+        throw new Error('User not found');
+      }
+
+      return user.joinedEvents;
+    } catch (error) {
+      throw error;
+    }
   }
 }
 

@@ -24,6 +24,17 @@ export const Home = () => {
       }, delay);
     };
   }
+
+  const handleResetFilters = () => {
+    setFilters(prevFilters => ({
+      ...prevFilters,
+      city: "",
+      genre: "",
+      maxPrice: "",
+    }));
+    fetchEvents('default')
+
+  };
   
 
   useEffect(()=>{
@@ -35,16 +46,20 @@ export const Home = () => {
    
   }, [state])
 
-  const fetchEvents = async () => {
+
+  const fetchEvents = async (type) => {
     try {
       let url = `${API_URL}/api/events?`;
 
       const filteredUrl = new URL(url);
-      Object.entries(filters).forEach(([key, value]) => {
-        if (value) {
-          filteredUrl.searchParams.append(key, value);
-        }
-      });
+      if(type !== 'default'){
+        Object.entries(filters).forEach(([key, value]) => {
+          if (value) {
+            filteredUrl.searchParams.append(key, value);
+          }
+        });
+      }
+
 
       const response = await fetch(filteredUrl, {
         method: "GET",
@@ -144,6 +159,13 @@ export const Home = () => {
         >
           Apply Filters
         </button>
+
+        <button
+            onClick={handleResetFilters}
+            className="border font-semibold border-1  rounded-lg bg-gray-200 hover:bg-gray-300 text-black p-2"
+          >
+            Reset Filters
+          </button>
       </div>
       <div className="grid-container mt-10 p-4 w-[80%]">
         {events.map((item, index) => (

@@ -9,16 +9,16 @@ const NavBar = () => {
   const [searchText, setSearchText] = useState("");
   const [showRegisterModal, setShowRegisterModal] = useState(false);
   const [isClickedBell, setIsClickedBell] = useState(false);
-  const [notification, setNotification] = useState([])
-const popoverRef1 = useRef(null);
+  const [notification, setNotification] = useState([]);
+  const popoverRef1 = useRef(null);
   const [isPopoverVisible, setPopoverVisible] = useState(false);
   const { user, setUser } = useContext(UserContext);
   const popoverRef = useRef(null);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const logout = () => {
-    localStorage.removeItem('cresol_user')
-    setUser(null)
-  }
+    localStorage.removeItem("cresol_user");
+    setUser(null);
+  };
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -26,21 +26,20 @@ const popoverRef1 = useRef(null);
         setPopoverVisible(false);
       }
 
-       if (popoverRef1.current && !popoverRef1.current.contains(event.target)) {
-         setIsClickedBell(false);
+      if (popoverRef1.current && !popoverRef1.current.contains(event.target)) {
+        setIsClickedBell(false);
       }
-      
-      };
-      const handleClickOutside1 = (event) => {
-        if (popoverRef1.current && !popoverRef1.current.contains(event.target)) {
-          setIsClickedBell(false);
-        }
-      };
+    };
+    const handleClickOutside1 = (event) => {
+      if (popoverRef1.current && !popoverRef1.current.contains(event.target)) {
+        setIsClickedBell(false);
+      }
+    };
 
-      document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
 
     return () => {
-        document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
 
@@ -54,10 +53,8 @@ const popoverRef1 = useRef(null);
 
         const result = await response.json();
         setNotification(result);
-        
       } catch (error) {
         console.error("Error fetching data:", error.message);
-       
       }
     };
 
@@ -73,14 +70,14 @@ const popoverRef1 = useRef(null);
 
   const openModal = () => {
     setShowRegisterModal(true);
-    };
-    
-    const handleClickBell = () => {
-      setIsClickedBell(!isClickedBell);  
-    }
+  };
+
+  const handleClickBell = () => {
+    setIsClickedBell(!isClickedBell);
+  };
   const handleSearchChange = (e) => {
     setSearchText(e.target.value);
-    navigate(`/`, {state: e.target.value})
+    navigate(`/`, { state: e.target.value });
   };
 
   return (
@@ -128,7 +125,7 @@ const popoverRef1 = useRef(null);
             )}
           </div>
           <Link to="/createevent">
-            <button className="font-medium border border-gray-400 px-3 py-1 rounded-lg text-white bg-blue-800 hover:bg-blue-600">
+            <button className="font-medium  px-3 py-1 rounded-lg text-white bg-[#ee5537] hover:bg-[#ef5821]">
               Create Event
             </button>
           </Link>
@@ -155,23 +152,25 @@ const popoverRef1 = useRef(null);
                       Sign Up
                     </li>
                   )}
-                  
+
                   {user && user.role === "organizer" && (
                     <Link to="/manageevent">
-                    <li className="rounded-lg p-1 hover:bg-blue-100">
-                      Manage Events
-                    </li>
+                      <li className="rounded-lg p-1 hover:bg-blue-100">
+                        Manage Events
+                      </li>
                     </Link>
                   )}
-                 
 
-                  <li className="rounded-lg p-1 hover:bg-blue-100">
-                    My Bookings
-                  </li>
+                  <Link to={`/${user?._id}/bookings`}>
+                    <li className="rounded-lg p-1 hover:bg-blue-100">
+                      My Bookings
+                    </li>
+                  </Link>
                   {user && (
-                    <li 
-                    onClick={logout}
-                    className="rounded-lg p-1 hover:bg-blue-100">
+                    <li
+                      onClick={logout}
+                      className="rounded-lg p-1 hover:bg-blue-100"
+                    >
                       Sign Out
                     </li>
                   )}
