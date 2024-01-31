@@ -1,3 +1,14 @@
+# Functionalities 
+
+1. Register User - 2 user roles attendee and organizer , default value is attendee , if any user creates a event then he/she becomes organizer
+2. Organizer can see a holistic view of his/her events and make changes to them or delete them 
+3. User can see the RSVP'd events as their bookings in a tabular form
+4. Users can use search and filters to navigate across events.
+5. Users can open an event for more details and RSVP to that event.
+6. All operations are passed through middlewares for security.
+7. App uses jwt authentication 
+
+
 <img width="344" alt="Screenshot 2024-01-31 at 9 58 39 AM" src="https://github.com/neeru0713/cresol-assignment/assets/123808700/157451e1-714d-49fc-b2d9-20b965ef261c">
 <img width="540" alt="Screenshot 2024-01-31 at 9 58 58 AM" src="https://github.com/neeru0713/cresol-assignment/assets/123808700/d9608b3b-46e3-415a-b75b-8864d3e12b57">
 <img width="530" alt="Screenshot 2024-01-31 at 9 59 11 AM" src="https://github.com/neeru0713/cresol-assignment/assets/123808700/ab2e19d5-d0f3-430b-bb2f-1dd0cbf985da">
