@@ -140,11 +140,10 @@ class EventService {
       }
 
       if (!event.attendees.includes(userId)) {
-        event.attendees.push(userId);
-        await event.save();
-        return { success: true, message: 'RSVP successful' };
+        return { rsvp: false};
+      
       } else {
-        return { success: false, message: 'User already RSVP\'d to this event' };
+        return { rsvp: true };
       }
     } catch (error) {
       throw error;

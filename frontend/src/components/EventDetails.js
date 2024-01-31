@@ -32,11 +32,11 @@ export const EventDetails = () => {
        
       });
 
-      if (response.status === 200) {
-        setIsRSVPd(false)
-      }
-      if (response.status === 400) {
+      const jsonRes = await response.json()
+      if(jsonRes.rsvp){
         setIsRSVPd(true)
+      } else {
+        setIsRSVPd(false)
       }
 
      
@@ -90,6 +90,7 @@ export const EventDetails = () => {
 
       await response.json();
       setJoinClicked(true);
+      await checkRSVPStatus();
 
       await pushNotification(
         `Your event : ${state.title}'s booking is confirmed`
