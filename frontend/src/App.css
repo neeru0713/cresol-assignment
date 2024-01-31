@@ -63,3 +63,24 @@ input{
     @apply font-semibold ;
 }
 
+.event-table-container {
+  margin-top: 20px;
+}
+
+.event-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  
+  
+}
+
+.event-table th, .event-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.event-table th {
+  background-color: #f2f2f2;
+}

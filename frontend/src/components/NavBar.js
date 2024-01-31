@@ -1,19 +1,25 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
 import { CgSearch } from "react-icons/cg";
 import Register from "./Register";
-import { Link } from "react-router-dom";
 import { SlBell } from "react-icons/sl";
+import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../App";
 
 const NavBar = () => {
   const [searchText, setSearchText] = useState("");
   const [showRegisterModal, setShowRegisterModal] = useState(false);
-    const [isPopoverVisible, setPopoverVisible] = useState(false);
   const [isClickedBell, setIsClickedBell] = useState(false);
   const [notification, setNotification] = useState([])
-  const { user } = useContext(UserContext);
-  const popoverRef = useRef(null);
 const popoverRef1 = useRef(null);
+  const [isPopoverVisible, setPopoverVisible] = useState(false);
+  const { user, setUser } = useContext(UserContext);
+  const popoverRef = useRef(null);
+  const navigate = useNavigate()
+  const logout = () => {
+    localStorage.removeItem('cresol_user')
+    setUser(null)
+  }
+
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (popoverRef.current && !popoverRef.current.contains(event.target)) {
@@ -74,6 +80,7 @@ const popoverRef1 = useRef(null);
     }
   const handleSearchChange = (e) => {
     setSearchText(e.target.value);
+    navigate(`/`, {state: e.target.value})
   };
 
   return (
@@ -135,7 +142,7 @@ const popoverRef1 = useRef(null);
               src="https://assets-in.bmscdn.com/static/2023/10/default-pic.png"
               alt="User"
             />
-            <span>Hi, {user?.name || "Guest"}</span>
+            <span>{user?.name || "Guest"}</span>
             {isPopoverVisible && (
               <div className="popover rounded-lg absolute bg-white right-0 shadow-md top-10">
                 {/* Content of the user icon popover */}
@@ -148,16 +155,23 @@ const popoverRef1 = useRef(null);
                       Sign Up
                     </li>
                   )}
+                  
                   {user && user.role === "organizer" && (
+                    <Link to="/manageevent">
                     <li className="rounded-lg p-1 hover:bg-blue-100">
                       Manage Events
                     </li>
+                    </Link>
                   )}
+                 
+
                   <li className="rounded-lg p-1 hover:bg-blue-100">
                     My Bookings
                   </li>
                   {user && (
-                    <li className="rounded-lg p-1 hover:bg-blue-100">
+                    <li 
+                    onClick={logout}
+                    className="rounded-lg p-1 hover:bg-blue-100">
                       Sign Out
                     </li>
                   )}

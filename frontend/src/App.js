@@ -5,6 +5,7 @@ import './App.css';
 import { Home } from "./components/Home";
 import { EventDetails } from "./components/EventDetails";
 import React, { useState, useEffect, createContext } from "react";
+import ManageEvent from "./components/ManageEvent";
 
 export const UserContext = createContext();
 
@@ -27,6 +28,8 @@ function App() {
           <NavBar />
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/:title/edit" element={<CreateEvent editMode={true}/>} />
+            <Route path="/manageevent" element={<ManageEvent />} />
             <Route path="/createevent" element={<CreateEvent />} />
             <Route path="/:title/details" element={<EventDetails/>} />
           </Routes>

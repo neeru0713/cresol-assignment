@@ -48,7 +48,7 @@ class EventController {
     
       await eventService.deleteEvent(eventId);
 
-      res.status(204).json({message: "Event deleted successfully"}); // No content in the response for a successful deletion
+      res.status(204).json({message: "Event deleted successfully"});
     } catch (error) {
       console.error('Error deleting event:', error);
       res.status(500).send('Internal Server Error');
@@ -60,7 +60,6 @@ class EventController {
       const eventId = req.params.eventId;
       const userId = req.user._id;
 
-      // Join the event
       const joinedEvent = await eventService.joinEvent(eventId, userId);
 
       res.status(200).json(joinedEvent);
@@ -80,6 +79,18 @@ class EventController {
       console.error('Error searching events:', error);
       res.status(500).send('Internal Server Error');
     }
+  }
+
+  async getEventsOfUser(req, res){
+    try {
+        
+        const events = await eventService.getEventsOfUser(req.params.userId);
+  
+        res.status(200).json(events);
+      } catch (error) {
+        console.error('Error searching events:', error);
+        res.status(500).send('Internal Server Error');
+      }
   }
 
 
