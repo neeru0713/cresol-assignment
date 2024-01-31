@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import { API_URL } from "../config/config";
 import { UserContext } from "../App";
-const CreateEvent = () => {
+const CreateEvent = ({editMode}) => {
   const { user, setUser } = useContext(UserContext);
   const [formData, setFormData] = useState({
     organization: "",
@@ -46,6 +46,7 @@ const CreateEvent = () => {
         await response.json();
         const updatedUser = { ...user, role: "organizer" };
         setUser(updatedUser);
+        localStorage.setItem("cresol_user", JSON.stringify(updatedUser));
     } catch (error) {
       console.error("Error during API call:", error.message);
     }

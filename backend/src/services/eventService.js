@@ -94,6 +94,15 @@ class EventService {
       throw error;
     }
   }
+
+  async getEventsOfUser(userId){
+    try {
+        const events = await Event.find({ owner: userId });
+        return events;
+      } catch (error) {
+        throw error;
+      }
+  }
 }
 
 module.exports = new EventService();

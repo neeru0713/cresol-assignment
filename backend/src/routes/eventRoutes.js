@@ -8,6 +8,7 @@ const validateEventOwnership = require('../middlewares/validateEventOwnership');
 
 router.post('/', authenticateUser, validateEvent, eventController.createEvent);
 router.get('/', filterEvents, eventController.getAllEvents);
+router.get('/:userId', authenticateUser, eventController.getEventsOfUser);
 router.put('/:eventId', authenticateUser, validateEventOwnership, eventController.editEvent);
 router.delete('/:eventId', authenticateUser, validateEventOwnership, eventController.deleteEvent);
 router.get('/:eventId/join', authenticateUser, eventController.joinEvent);

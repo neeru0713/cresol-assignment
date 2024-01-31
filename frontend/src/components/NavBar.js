@@ -7,8 +7,13 @@ const NavBar = () => {
   const [searchText, setSearchText] = useState("");
   const [showRegisterModal, setShowRegisterModal] = useState(false);
   const [isPopoverVisible, setPopoverVisible] = useState(false);
-  const { user } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
   const popoverRef = useRef(null);
+
+  const logout = () => {
+    localStorage.removeItem('cresol_user')
+    setUser(null)
+  }
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -78,7 +83,7 @@ const NavBar = () => {
               src="https://assets-in.bmscdn.com/static/2023/10/default-pic.png"
               alt="User"
             />
-            <span>Hi, {user?.name || "Guest"}</span>
+            <span>{user?.name || "Guest"}</span>
             {isPopoverVisible && (
               <div className="popover rounded-lg absolute bg-white right-0 shadow-md top-10">
                 <ul className="p-4 border border-gray-300 rounded-lg border-lg w-[150px] text-center flex flex-col">
@@ -90,17 +95,23 @@ const NavBar = () => {
                       Sign Up
                     </li>
                   )}
+                  
                   {user && user.role === "organizer" && (
+                    <Link to="/manageevent">
                     <li className="rounded-lg p-1 hover:bg-blue-100">
                       Manage Events
                     </li>
+                    </Link>
                   )}
+                 
 
                   <li className="rounded-lg p-1 hover:bg-blue-100">
                     My Bookings
                   </li>
                   {user && (
-                    <li className="rounded-lg p-1 hover:bg-blue-100">
+                    <li 
+                    onClick={logout}
+                    className="rounded-lg p-1 hover:bg-blue-100">
                       Sign Out
                     </li>
                   )}
